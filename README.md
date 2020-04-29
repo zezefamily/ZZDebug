@@ -10,8 +10,6 @@ target 'YourTargetName' do
 end
 ```
 
-> WARNING: Don't submit `.ipa` to AppStore which has been linked with the `ZZDebug.framework`. This  outline a way to use build configurations to isolate linking the framework to `Debug` builds only.
-
 ## 使用
 
 ### Objective-C
@@ -26,7 +24,7 @@ end
 
 		self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     	[self.window makeKeyAndVisible];
-    	
+
 		#ifdef DEBUG
         [[ZZDebug shareInstance]enable];
     	#endif
