@@ -118,7 +118,7 @@ static NSString *cellIdentifier = @"cell";
     [self.logsView reloadData];
     if(isAdd){
         NSIndexPath *path = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
-        [self.logsView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.logsView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
 }
 
