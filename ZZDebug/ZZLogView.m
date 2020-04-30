@@ -41,7 +41,7 @@ static NSString *cellIdentifier = @"cell";
         _toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, HEAD_HEIGHT)];
         for(int i = 0;i<4;i++){
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
-            btn.frame = CGRectMake(15+65*i, 5, 60, 30);
+            btn.frame = CGRectMake(15+45*i, 5, 40, 30);
             [btn setTitle:@[@"顶部",@"底部",@"清空",@"关闭"][i] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -65,6 +65,14 @@ static NSString *cellIdentifier = @"cell";
     }
     return _logsView;
 }
+
+- (void)reloadFrame:(CGRect)newFrame
+{
+    self.frame = newFrame;
+    _toolView.frame = CGRectMake(0, 0, self.frame.size.width, HEAD_HEIGHT);
+    _logsView.frame = CGRectMake(0, HEAD_HEIGHT, self.frame.size.width, self.frame.size.height-HEAD_HEIGHT);
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.dataArray.count;
@@ -76,7 +84,7 @@ static NSString *cellIdentifier = @"cell";
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.textLabel.textColor = [UIColor greenColor];
         cell.textLabel.numberOfLines = 0;
     }
@@ -117,6 +125,7 @@ static NSString *cellIdentifier = @"cell";
     self.dataArray = logArray;
     [self.logsView reloadData];
     if(isAdd){
+        //如果在底部
         NSIndexPath *path = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
         [self.logsView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
