@@ -123,12 +123,15 @@ static NSString *cellIdentifier = @"cell";
 - (void)reloadDataWithArray:(NSMutableArray *)logArray isAdd:(BOOL)isAdd
 {
     self.dataArray = logArray;
-    [self.logsView reloadData];
-    if(isAdd){
-        //如果在底部
-        NSIndexPath *path = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
-        [self.logsView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    }
+    //确保在主线程更新UI
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.logsView reloadData];
+        if(isAdd){
+            //如果在底部
+            NSIndexPath *path = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
+            [self.logsView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
+    });
 }
 
 @end
