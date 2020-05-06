@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   
   s.name         = "ZZDebug"
-  s.version      = "1.0.0"
-  s.summary      = "iOS Debugging Tool."
+  s.version      = "1.0.2"
+  s.summary      = "一个简单的iOS监测App运行时NSLog输出可视化工具"
   s.homepage     = "https://github.com/zezefamily/ZZDebug"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
