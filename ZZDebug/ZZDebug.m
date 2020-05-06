@@ -89,6 +89,19 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearLogs) name:@"k_Notification_ClearAllLogs" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hidden) name:@"k_Notification_CloseLogView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didChangeRotate:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    
+    [self showCrash];
+}
+
+- (void)showCrash
+{
+    BOOL isCrash = [[NSUserDefaults standardUserDefaults]boolForKey:@"isCrash"];
+    if(isCrash){
+        NSString *crashLog = [[NSUserDefaults standardUserDefaults]objectForKey:@"CrashLog"];
+        [self.logDataManager addLogStr:crashLog];
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"isCrash"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
 }
 
 - (void)showlog:(UIButton *)sender

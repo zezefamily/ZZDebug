@@ -22,9 +22,13 @@
             (void*)&orig_nslog
         };
         rebind_symbols((struct rebinding[1]){nslog_rebinding}, 1);
+        //异常崩溃监听
+        NSSetUncaughtExceptionHandler (&uncaughtExceptionHandler);
     });
 }
+
 static void (*orig_nslog)(NSString *format, ...);
+
 void my_nslog(NSString *format, ...) {
     /*方法一*/
 //    va_list vl;
@@ -40,4 +44,19 @@ void my_nslog(NSString *format, ...) {
     [ZZDebug.shareInstance.logDataManager addLogStr:str];
     va_end(va);
 }
+
+void uncaughtExceptionHandler(NSException *exception)
+{
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isCrash"];
+    //得到当前调用栈信息
+    NSArray *arr = [exception callStackSymbols];
+    //非常重要，就是崩溃的原因
+    NSString *reason = [exception reason];
+    //异常类型
+    NSString *name = [exception name];
+    NSString *crashStr = [NSString stringWithFormat:@"\nCrash_Node:\nexception type : %@ \ncrash reason : %@ \ncall stack info : %@", name, reason, arr];
+    [[NSUserDefaults standardUserDefaults]setObject:crashStr forKey:@"CrashLog"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 @end
